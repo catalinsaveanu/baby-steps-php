@@ -32,7 +32,7 @@
 	sudo echo 127.0.0.1 babysteps.dev >> /etc/hosts
 	sudo echo Listen 8060 >> /etc/apache2/ports.conf
 
-	cat /var/www/mygov2/vagrant/config/apache-vhosts > /etc/apache2/sites-available/000-default.conf
+	cat /var/www/babysteps/vagrant/config/apache-vhosts > /etc/apache2/sites-available/000-default.conf
 	a2enmod rewrite
 	service apache2 restart
 
