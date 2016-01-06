@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+    ServerName babysteps.dev
+    DocumentRoot "/var/www/babysteps/app/"
+
+    <Directory "/var/www/babysteps/app/">
+    	EnableSendfile Off
+        Options Indexes FollowSymLinks
+	    AllowOverride All
+	    Order allow,deny
+	    Allow from all
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:8060>
+    ServerName babysteps.dev
+    DocumentRoot "/var/www/babysteps/app/"
+
+    <Directory "/var/www/babysteps/app/">
+    	EnableSendfile Off
+        Options Indexes FollowSymLinks
+	    AllowOverride All
+	    Order allow,deny
+	    Allow from all
+    </Directory>
+</VirtualHost>
