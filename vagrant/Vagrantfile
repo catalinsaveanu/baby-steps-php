@@ -36,8 +36,8 @@ Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |vb|
     vb.gui = false
     vb.customize ["modifyvm", :id, "--memory", "1024", "--cpuexecutioncap", "90", "--name", "babysteps.dev"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
   config.vm.provision :shell, :path => "bootstrap.sh"
-
 end

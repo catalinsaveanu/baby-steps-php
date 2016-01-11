@@ -1,7 +1,11 @@
 <?php
 
-define('TIME', microtime(true));
-define('APP_DIR', dirname(__FILE__));
-define('ROOT_DIR', dirname(APP_DIR));
+require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
 
-echo('babysteps');
+require_once(LIBRARY_PATH . "/templateFunctions.php");
+
+$variables = array(
+	'setInIndexDotPhp' => 'test variables in index.php'
+);
+
+renderLayoutWithContentFile("home.php", $variables);

@@ -27,13 +27,14 @@
 	echo "### Configuring Apache Vhost"
 
 	echo "${PHP_SETTINGS}" > /etc/php5/apache2/conf.d/90-babysteps.ini
-	echo "ServerName babysteps.dev" | sudo tee /etc/php5/apache2/conf.d/fqdn
+	echo "ServerName babysteps.dev" | sudo tee /etc/apache2/conf-available/fqdn.conf
+ 	sudo a2enconf fqdn
 
 	sudo echo 127.0.0.1 babysteps.dev >> /etc/hosts
 	sudo echo Listen 8060 >> /etc/apache2/ports.conf
 
 	cat /var/www/babysteps/vagrant/config/apache-vhosts > /etc/apache2/sites-available/000-default.conf
-	a2enmod rewrite
+	sudo a2enmod rewrite
 	service apache2 restart
 
 	echo ""
