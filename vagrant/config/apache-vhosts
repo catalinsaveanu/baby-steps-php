@@ -1,8 +1,8 @@
 <VirtualHost *:80>
     ServerName babysteps.dev
-    DocumentRoot "/var/www/babysteps/app/"
+    DocumentRoot "/var/www/babysteps/public/"
 
-    <Directory "/var/www/babysteps/app/">
+    <Directory "/var/www/babysteps/public/">
     	EnableSendfile Off
         Options Indexes FollowSymLinks
 	    AllowOverride All
@@ -13,9 +13,9 @@
 
 <VirtualHost *:8060>
     ServerName babysteps.dev
-    DocumentRoot "/var/www/babysteps/app/"
+    DocumentRoot "/var/www/babysteps/public/"
 
-    <Directory "/var/www/babysteps/app/">
+    <Directory "/var/www/babysteps/public/">
     	EnableSendfile Off
         Options Indexes FollowSymLinks
 	    AllowOverride All
