@@ -1,2 +1,2 @@
 # baby-steps-php
-I try to make an user management system.
+I try to make a user management system.
