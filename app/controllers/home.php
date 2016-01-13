@@ -13,8 +13,4 @@ class Home extends Controller {
 			'mood' => $mood
 		]);
 	}
-
-	public function test() {
-		echo 'test';
-	}
 }
