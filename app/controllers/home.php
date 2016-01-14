@@ -7,16 +7,16 @@ class Home extends \Core\Controller {
 	 * @param string $mood
 	 */
 	public function index($name = 'cata', $mood = 'happy') {
-		$user = $this->model('User');
+		$user = new \Models\User;
 		$user->name = $name;
 
-		return $this->view('Home/index', [
+		return $this->view('Home/Index', [
 			'name' => $user->name,
 			'mood' => $mood
 		]);
 	}
 
-	$user = new User(1);
+	/*$user = new User(1);
 	$user->username = "Something Nice";
 	$user->save();
 
@@ -26,5 +26,5 @@ class Home extends \Core\Controller {
 
 	$userCollection = User::find([
 		'id', '>' , '10'
-	]);
+	]);*/
 }

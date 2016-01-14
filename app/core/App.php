@@ -2,7 +2,7 @@
 namespace Core;
 
 class App{
-	protected $controller = 'Controllers\Home';
+	protected $controller;
 	protected $method = 'index';
 	protected $params = [];
 
@@ -10,26 +10,29 @@ class App{
 
 		$url = $this->parseUrl();
 
-		if(count($url)) {
-			$controllerMethod = array_splice($url, 2);
-			$this->method = $controllerMethod;
-
-			$controllerPath = array_map(function($element){
-				return ucfirst($element);
-			}, $url);
-			$controllerClassName = "\\Controllers\\" . implode("\\", $controllerPath);
-
+		if (count($url) > 1) {
+			$this->method = $this->normalize(array_pop($url));
 		}
+
+		if (count($url) > 0) {
+			$controllerPath =  array_map(function($str){
+				return $this->normalize($str, false);
+			}, $url);
+			$controllerClassName = "\\Controllers\\" .implode('\\', $controllerPath);
+		}else {
+			$controllerClassName = "\\Controllers\\Home";
+		}
+
+		echo ('Called Controller: "' . $controllerClassName . '" and method: "' . $this->method . '"');
+		echo ("<br>Params: ");
+		print_r(array_slice($_GET, 1));
 
 		if(!$this->controller = new $controllerClassName) {
 			throw new \Exception("Cannot find Class : " . $controllerClassName);
 		}
 
-		$this->normalizeMethod();
-
 		if(!method_exists($this->controller, $this->method)) {
-			throw new \Exception("Cannot find the right method: " . $this->method .
-			" inside Controller: " . $controllerClassName);
+			throw new \Exception("Cannot find the right method: " . $this->method . " inside Controller: " . $controllerClassName);
 		}
 
 		call_user_func_array([$this->controller, $this->method], $this->params);
@@ -38,19 +41,19 @@ class App{
 	public function parseUrl() {
 		if (isset($_GET['url'])) {
 			return explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
+		}else {
+			return [];
 		}
 	}
 
-	private function normalizeMethod()
-	{
-		$this->method = implode("", $this->method);
-		$methodParts = explode("_", $this->method);
+	private function normalize($str = '', $firstLetterSmall = true ) {
+		$str = str_replace('_', ' ', $str);
+		$str = str_replace(' ', '', ucwords($str));
 
-		$methodParts = array_map(function($element){
-			return ucfirst(strtolower($element));
-		}, $methodParts);
-		$methodParts[0] = strtolower($methodParts[0]);
+		if ($firstLetterSmall) {
+			$str = lcfirst($str);
+		}
 
-		$this->method = implode("", $methodParts);
+		return $str;
 	}
 }
