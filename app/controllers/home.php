@@ -10,7 +10,7 @@ class Home extends \Core\Controller {
 		$user = $this->model('User');
 		$user->name = $name;
 
-		return $this->view('home/index', [
+		return $this->view('Home/index', [
 			'name' => $user->name,
 			'mood' => $mood
 		]);

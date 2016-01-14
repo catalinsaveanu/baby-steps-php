@@ -10,4 +10,4 @@ function __autoload($className) {
     require_once (implode("/", $classPath) . ".php");
 }
 
-//require_once 'core/App.php';
+//require_once 'Core/App.php';
