@@ -1,5 +1,7 @@
 <?php
-class Home extends Controller {
+namespace Controllers;
+
+class Home extends \Core\Controller {
 	/**
 	 * @param string $name
 	 * @param string $mood
@@ -8,9 +10,21 @@ class Home extends Controller {
 		$user = $this->model('User');
 		$user->name = $name;
 
-		$this->view('home/index', [
+		return $this->view('home/index', [
 			'name' => $user->name,
 			'mood' => $mood
 		]);
 	}
+
+	$user = new User(1);
+	$user->username = "Something Nice";
+	$user->save();
+
+	UserCollection()
+		- find
+		- save()
+
+	$userCollection = User::find([
+		'id', '>' , '10'
+	]);
 }

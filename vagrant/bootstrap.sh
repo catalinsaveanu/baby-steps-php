@@ -12,6 +12,8 @@
 	echo "### Installing necessary packages"
 	apt-get -q -y install htop git apache2 php5 php5-mysqlnd php-apc php5-mcrypt mysql-server-5.6 unzip php5-dev php5-gd php5-xdebug php5-curl php5-pgsql
 
+    sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+
 	echo ""
 	echo "### PHP settings"
 	PHP_SETTINGS='
