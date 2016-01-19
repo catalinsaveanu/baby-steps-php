@@ -4,15 +4,23 @@
 
 	touch /home/vagrant/.nano_history
 
+	export LANGUAGE=en_US.UTF-8
+	export LANG=en_US.UTF-8
+	export LC_ALL=en_US.UTF-8
+	locale-gen en_US.UTF-8
+	dpkg-reconfigure locales
+
 	echo ""
 	echo "### Updating & upgrading apt data"
-	apt-get update
-	apt-get upgrade
+	apt-get update -y
+	apt-get upgrade -y
 
-	echo "### Installing necessary packages"
-	apt-get -q -y install htop git apache2 php5 php5-mysqlnd php-apc php5-mcrypt mysql-server-5.6 unzip php5-dev php5-gd php5-xdebug php5-curl php5-pgsql
+	sudo apt-get install -y apache2 git
 
-    sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+	sudo apt-get install -y python-software-properties
+	sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
+	sudo apt-get update -y
+	sudo apt-get install -y -f php7.0
 
 	echo ""
 	echo "### PHP settings"
@@ -24,20 +32,25 @@
 	 	display_errors = On
 	 	error_reporting = E_ALL
 	'
-	
+	echo "${PHP_SETTINGS}" > /etc/php/7.0/apache2/conf.d/90-babysteps.ini
+
 	echo ""
 	echo "### Configuring Apache Vhost"
-
-	echo "${PHP_SETTINGS}" > /etc/php5/apache2/conf.d/90-babysteps.ini
+	echo "ServerName babysteps.dev" >> /etc/apache2/apache2.conf
 	echo "ServerName babysteps.dev" | sudo tee /etc/apache2/conf-available/fqdn.conf
- 	sudo a2enconf fqdn
 
 	sudo echo 127.0.0.1 babysteps.dev >> /etc/hosts
 	sudo echo Listen 8060 >> /etc/apache2/ports.conf
 
 	cat /var/www/babysteps/vagrant/config/apache-vhosts > /etc/apache2/sites-available/000-default.conf
-	sudo a2enmod rewrite
+	a2enmod rewrite
 	service apache2 restart
+
+	echo ""
+	echo "### Installing mysql server 5.6"
+	sudo apt-get update -y
+	sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -f mysql-server-5.6
+	sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
 	echo ""
 	echo "### Bootstrap completed"
