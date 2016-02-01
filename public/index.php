@@ -1,4 +1,8 @@
 <?php
-require_once('../app/init.php');
+define("APP_DIR", "../app/");
 
-$app = new Core\App();
+require_once(APP_DIR . "Core/Autoloader.php");
+
+$autoloader = new \Core\Autoloader();
+
+$app = new \Core\App();

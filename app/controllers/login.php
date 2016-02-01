@@ -1,5 +1,5 @@
 <?php
-namespace Login;
+namespace Controllers;
 
 class Login extends \Core\Controller {
 	public function index() {
